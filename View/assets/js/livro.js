@@ -1,4 +1,4 @@
-var url = 'http://localhost:5220/';
+var url = 'http://localhost:3000/';
 
 function cadastrar_livro()
 {

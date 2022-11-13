@@ -70,9 +70,54 @@ function listar_livros() {
         })
 }
 
-function atualizar_livro(id, divTitulo, div)
+function atualizar_livro(id)
 {
-    
+    let divTitulo = "Aventuras2: O retorno";
+    let divAutor = "Rafa";
+    let divLancamento = "05/11/2022";
+    let body =
+    {
+        'Titulo': divTitulo.value,
+        'Autor': divAutor.value,
+        'Lancamento': divLancamento.value 
+    }
+
+    fetch(url + "/livros/" + id,
+    {
+        'method': 'PUT',
+        'redirect': 'follow',
+        'headers':
+        {
+            'content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+        'body': JSON.stringify(body)
+    })
+    .then((response) =>
+    {
+        if(response.ok)
+        {
+            return response.text()
+        }
+        else
+        {
+            return response.text().then((text) =>
+            {
+                throw new Error(text)
+            })
+        }
+    })
+
+    .then((output) =>
+    {
+        console.log(output)
+        alert('Livro atualizado')
+    })
+    .catch((error) =>
+    {
+        console.log(error)
+        alert('Não foi possível atualizar o livro')
+    })
 }
 
 function deletar_livro(id)

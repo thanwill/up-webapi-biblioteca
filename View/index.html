@@ -62,8 +62,7 @@
                   <h4>Livros</h4>
                   <div id="header-livros"></div>
                 </li>
-                <button onclick="atualizar_livro(1)">Atualizar</button>
-                <!--<div id="lista-Livros"></div>-->
+                <div id="lista-livros"></div>
               </ul>
             </div>
           </div>
@@ -264,6 +263,7 @@
       </div>
     </div>
     <!-- TABELA DE VISUALIZAÇÃO E EDIÇÃO DOS LIVROS-->
+   
     <div id="see-forms-book" class="modal">
       <div class="modal-content">
         <div class="row" style="padding-top: 1vh">
@@ -272,29 +272,30 @@
             Consulte as informações cadastradas do livro selecionado.
           </p>
         </div>
-
+        
         <div class="row">
           <table class="grey-text striped">
             <tbody>
               <tr>
                 <td>Título</td>
-                <td></td>
+                <td id="mostrar-titulo"></td>
               </tr>
               <tr>
                 <td>Autor</td>
-                <td></td>
+                <td id="mostrar-autor"></td>
               </tr>
               <tr>
                 <td>Lançamento</td>
-                <td></td>
+                <td id="mostrar-lancamento"></td>
               </tr>
               <tr>
                 <td>Quantidade</td>
-                <td></td>
+                <td id="mostrar-quantidade"></td>
               </tr>
             </tbody>
           </table>
         </div>
+         
         <form class="" style="display: none">
           <div class="row">
             <div class="input-field col s12">
@@ -326,10 +327,11 @@
         </form>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Editar</a>
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Excluir</a>
+        <a id="editar-livro" href="#!" class="modal-close waves-effect waves-green btn-flat">Editar</a>
+        <a id="excluir-livro" onclick="deletar_livro()" href="#!" class="modal-close waves-effect waves-green btn-flat">Excluir</a>
       </div>
     </div>
+    
     <!-- FORM DE USUÁRIOS-->
     <div id="forms-user" class="modal">
       <div class="modal-content">

@@ -1,5 +1,7 @@
 var url = 'http://localhost:3000';
 
+let idLivro = 0;
+
 function cadastrar_livro() {
     let body =
     {
@@ -42,24 +44,30 @@ function cadastrar_livro() {
         })
 }
 
+function listar_livro_especifico() {
+    
+
+}
+
 function listar_livros() {
+
     fetch(url + '/livros')
         .then(response => response.json())
         .then((livros) => {
-            let listaLivros = document.getElementById('lista-Livros');
+            let listaLivros = document.getElementById('lista-livros');
 
             let list = '';
             livros.forEach((livro, index) => {
                 if (livro.Titulo.lenght != 0) {
-                    list +=
+                    list +=             
                         `<div class="collection-item grey-text" style="text-align:left;">
                         ${livro.Titulo}
-                        <a class="secondary-content modal-trigger" href="#visualizar-livro"><i
-                        class="material-icons">visibility</i></a>
+                        <a class="secondary-content modal-trigger" href="#see-forms-book"><i
+                         onclick="info_livro(${livro.Id})" class="material-icons">visibility</i></a>
                         </div>`
+                        
                 }
-                else
-                {
+                else {
                     list +=
                         `<div class="collection-item grey-text">
                         Vazia.
@@ -67,89 +75,91 @@ function listar_livros() {
                 }
             });
             listaLivros.innerHTML = list;
-        })
+        });
+}
+function info_livro(id)
+{
+   fetch(url + '/livros/' + id)
+   .then(response => response.json())
+   .then((livros) =>
+   {
+    document.getElementById('mostrar-titulo').innerHTML = livros.Titulo
+    document.getElementById('mostrar-autor').innerHTML = livros.Autor
+    document.getElementById('mostrar-lancamento').innerHTML = livros.Lancamento
+    document.getElementById('mostrar-quantidade').innerHTML = livros.Estoque;
+
+    idLivro = livros.Id;
+   })
+    
 }
 
-function atualizar_livro(id)
-{
-    let divTitulo = "Aventuras2: O retorno";
-    let divAutor = "Rafa";
-    let divLancamento = "05/11/2022";
+listar_livros();
+
+function atualizar_livro(id, divTitulo, divAutor, divLancamento) {
     let body =
     {
         'Titulo': divTitulo.value,
         'Autor': divAutor.value,
-        'Lancamento': divLancamento.value 
+        'Lancamento': divLancamento.value
     }
 
     fetch(url + "/livros/" + id,
-    {
-        'method': 'PUT',
-        'redirect': 'follow',
-        'headers':
         {
-            'content-type': 'application/json',
-            'Accept': 'application/json'
-        },
-        'body': JSON.stringify(body)
-    })
-    .then((response) =>
-    {
-        if(response.ok)
-        {
-            return response.text()
-        }
-        else
-        {
-            return response.text().then((text) =>
+            'method': 'PUT',
+            'redirect': 'follow',
+            'headers':
             {
-                throw new Error(text)
-            })
-        }
-    })
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            'body': JSON.stringify(body)
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.text()
+            }
+            else {
+                return response.text().then((text) => {
+                    throw new Error(text)
+                })
+            }
+        })
 
-    .then((output) =>
-    {
-        console.log(output)
-        alert('Livro atualizado')
-    })
-    .catch((error) =>
-    {
-        console.log(error)
-        alert('Não foi possível atualizar o livro')
-    })
+        .then((output) => {
+            console.log(output)
+            alert('Livro atualizado')
+        })
+        .catch((error) => {
+            console.log(error)
+            alert('Não foi possível atualizar o livro')
+        })
 }
 
-function deletar_livro(id)
-{
+function deletar_livro() {
+
+    let id = idLivro
     fetch(url + '/livros/' + id,
-    {
-        'method': 'DELETE',
-        'redirect': 'follow'
-    })
-    .then((response) =>
-    {
-        if(response.ok)
         {
-            return response.text()
-        }
-        else
-        {
-            return response.text().then((text) =>
-            {
-                throw new Error(text)
-            })
-        }
-    })
-    .then((output) =>
-    {
-        listar_livros()
-        console.log(output)
-        alert('Livro removido')
-    })
-    .catch((error) =>
-    {
-        console.log(error)
-        alert('Não foi possível remover o livro')
-    })
+            'method': 'DELETE',
+            'redirect': 'follow'
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.text()
+            }
+            else {
+                return response.text().then((text) => {
+                    throw new Error(text)
+                })
+            }
+        })
+        .then((output) => {
+            listar_livros()
+            console.log(output)
+            alert('Livro removido')
+        })
+        .catch((error) => {
+            console.log(error)
+            alert('Não foi possível remover o livro')
+        })
 }

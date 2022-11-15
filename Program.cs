@@ -73,6 +73,6 @@ class Program
         app.MapPut("/emprestimo", emprestimo.Atualizar);
 
         //roda aplicacao na porta 3000 (arbitraria)
-        app.Run("http://localhost:3000/");
+        app.Run();
     }
 }

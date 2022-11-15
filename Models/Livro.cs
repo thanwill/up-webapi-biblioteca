@@ -47,7 +47,10 @@ public class Livro
         var livro = banco.Livros.Find(atualizar.Id);
 
         if (livro == null)
+        {
             throw new Exception("Não encontrado.");
+        }
+            
 
         livro.Titulo = atualizar.Livro.Titulo;
         livro.Autor = atualizar.Livro.Autor;

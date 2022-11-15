@@ -51,9 +51,9 @@
                   <div class="nav-wrapper">
                     <form>
                       <div class="input-field">
-                        <input id="search" type="search" />
-                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                        <i class="material-icons">close</i>
+                        <input id="search"  type="search" />
+                        <label onclick="listar_livro_especifico()" class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <i onclick="listar_livros()" class="material-icons">close</i>
                       </div>
                     </form>
                   </div>
@@ -327,7 +327,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <a id="editar-livro" href="#!" class="modal-close waves-effect waves-green btn-flat">Editar</a>
+        <a id="editar-livro" onclick="atualizar_livro()" href="#!" class="modal-close waves-effect waves-green btn-flat">Editar</a>
         <a id="excluir-livro" onclick="deletar_livro()" href="#!" class="modal-close waves-effect waves-green btn-flat">Excluir</a>
       </div>
     </div>

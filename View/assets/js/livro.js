@@ -4,17 +4,15 @@ let idLivro = 0;
 
 function cadastrar_livro() {
 
-    if(document.getElementById('book_title').value == null  || document.getElementById('book_title').value == '')
-    {
+    if (document.getElementById('book_title').value == null || document.getElementById('book_title').value == '') {
         alert('Não foi possível efetuar o cadastro')
         return
     }
-    if(document.getElementById('autor_name').value == null  || document.getElementById('autor_name').value == '')
-    {
+    if (document.getElementById('autor_name').value == null || document.getElementById('autor_name').value == '') {
         alert('Não foi possível efetuar o cadastro')
         return
     }
-    
+
     let body =
     {
         'Titulo': document.getElementById('book_title').value,
@@ -22,7 +20,7 @@ function cadastrar_livro() {
         'Lancamento': document.getElementById('book-Lancamento').value,
         'Estoque': document.getElementById('test5').value
     };
-    
+
     fetch(url + '/livros',
         {
             'method': 'POST',
@@ -58,33 +56,28 @@ function cadastrar_livro() {
 }
 
 function listar_livro_especifico() {
-    
+
     let titulo = document.getElementById('search').value
     fetch(url + '/livros')
         .then(response => response.json())
-        .then((livros) =>
-        {
+        .then((livros) => {
             let listaLivros = document.getElementById('lista-livros');
 
             let list = '';
-    
-            livros.forEach((livro, index) =>
-            {
-                if(livro.Titulo.lenght !=0)
-                {
-                    if(livro.Titulo == titulo)
-                    {
+
+            livros.forEach((livro, index) => {
+                if (livro.Titulo.lenght != 0) {
+                    if (livro.Titulo == titulo) {
                         list +=
-                        `<div class="collection-item grey-text" style="text-align:left;">
+                            `<div class="collection-item grey-text" style="text-align:left;">
                         ${livro.Titulo}
                         <a class="secondary-content modal-trigger" href="#see-forms-book"><i
                          onclick="info_livro(${livro.Id})" class="material-icons">visibility</i></a>
                         </div>`
-                        
+
                     }
                 }
-                else
-                {
+                else {
                     list +=
                         `<div class="collection-item grey-text">
                         Vazia.
@@ -106,13 +99,13 @@ function listar_livros() {
             let list = '';
             livros.forEach((livro, index) => {
                 if (livro.Titulo.lenght != 0) {
-                    list +=             
+                    list +=
                         `<div class="collection-item grey-text" style="text-align:left;">
                         ${livro.Titulo}
                         <a class="secondary-content modal-trigger" href="#see-forms-book"><i
                          onclick="info_livro(${livro.Id})" class="material-icons">visibility</i></a>
                         </div>`
-                        
+
                 }
                 else {
                     list +=
@@ -124,35 +117,61 @@ function listar_livros() {
             listaLivros.innerHTML = list;
         });
 }
-function info_livro(id)
-{
-   fetch(url + '/livros/' + id)
-   .then(response => response.json())
-   .then((livros) =>
-   {
-    document.getElementById('mostrar-titulo').innerHTML = livros.Titulo
-    document.getElementById('mostrar-autor').innerHTML = livros.Autor
-    document.getElementById('mostrar-lancamento').innerHTML = livros.Lancamento
-    document.getElementById('mostrar-quantidade').innerHTML = livros.Estoque;
+function info_livro(id) {
+    fetch(url + '/livros/' + id)
+        .then(response => response.json())
+        .then((livros) => {
+            document.getElementById('mostrar-titulo').innerHTML = livros.Titulo
+            document.getElementById('mostrar-autor').innerHTML = livros.Autor
+            document.getElementById('mostrar-lancamento').innerHTML = livros.Lancamento
+            document.getElementById('mostrar-quantidade').innerHTML = livros.Estoque;
 
-    idLivro = livros.Id;
+            idLivro = livros.Id;
 
-   })
-    
+        })
+
 }
 
 listar_livros();
 
-function pre_atualizacao()
-{
-    let id = idLivro;
-    let titulo = 'Aventuras2: O retorno'
-    let autor = 'Rafa'
-    let lancamento = '05/11/2022'
-    atualizar_livro(id, titulo, autor, lancamento)
+function pre_atualizacao() {
+    fetch(url + '/livros/' + idLivro)
+        .then(response => response.json())
+        .then((livros) => {
+
+            let titulo = livros.Titulo
+            let autor = livros.Autor
+            let lancamento = livros.Lancamento
+
+            let resp = ''
+
+            do {
+                resp = window.prompt('Deseja editar o titulo do livro? [S/N]');
+                if (resp == 'S') {
+                    titulo = window.prompt('Informe o novo título')
+                }
+            } while (resp != 'S' && resp != 'N');
+
+            do {
+                resp = window.prompt('Deseja editar o nome do autor do livro? [S/N]');
+                if (resp == 'S') {
+                    autor = window.prompt('Informe o novo nome do autor')
+                }
+            } while (resp != 'S' && resp != 'N');
+
+            do {
+                resp = window.prompt('Deseja editar a data de lançamento do livro? [S/N]');
+                if (resp == 'S') {
+                    lancamento = window.prompt('Informe a nova data de lançamento')
+                }
+            } while (resp != 'S' && resp != 'N');
+
+            atualizar_livro(idLivro, titulo, autor, lancamento)
+        })
+
 }
 function atualizar_livro(id, divTitulo, divAutor, divLancamento) {
-    
+
     let body =
     {
         'Titulo': divTitulo,
@@ -166,7 +185,7 @@ function atualizar_livro(id, divTitulo, divAutor, divLancamento) {
             'redirect': 'follow',
             'headers':
             {
-                'content-type': 'application/json',
+                'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
             'body': JSON.stringify(body)
@@ -183,6 +202,7 @@ function atualizar_livro(id, divTitulo, divAutor, divLancamento) {
         })
 
         .then((output) => {
+            listar_livros()
             console.log(output)
             alert('Livro atualizado')
         })

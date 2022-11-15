@@ -42,9 +42,9 @@ public class Livro
         return banco.SaveChanges();
     }
 
-    public int Atualizar(BibliotecaContext banco, LivroAtualizar atualizar)
+    public int Atualizar(BibliotecaContext banco, Livro atualizar, int id)
     {
-        var livro = banco.Livros.Find(atualizar.Id);
+        var livro = banco.Livros.Find(id);
 
         if (livro == null)
         {
@@ -52,9 +52,9 @@ public class Livro
         }
             
 
-        livro.Titulo = atualizar.Livro.Titulo;
-        livro.Autor = atualizar.Livro.Autor;
-        livro.Lancamento = atualizar.Livro.Lancamento;
+        livro.Titulo = atualizar.Titulo;
+        livro.Autor = atualizar.Autor;
+        livro.Lancamento = atualizar.Lancamento;
 
         return banco.SaveChanges();
     }

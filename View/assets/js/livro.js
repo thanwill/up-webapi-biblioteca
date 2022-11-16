@@ -48,7 +48,7 @@ function cadastrar_livro() {
 
 function listar_livros() {
 
-    const listaLivros = document.getElementById("lista-livros");
+    let listaLivros = document.getElementById("lista-livros");
     while(listaLivros.firstChild){
         listaLivros.removeChild(listaLivros.firstChild);
     }

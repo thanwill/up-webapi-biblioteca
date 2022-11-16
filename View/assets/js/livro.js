@@ -48,8 +48,8 @@ function cadastrar_livro() {
 
 function listar_livros() {
 
-    let listaLivros = document.getElementById("lista-livros");
-    while(listaLivros.firstChild){
+    let listaLivros = document.getElementById('lista-livros');
+    while (listaLivros.firstChild) {
         listaLivros.removeChild(listaLivros.firstChild);
     }
     fetch(api + '/livros')

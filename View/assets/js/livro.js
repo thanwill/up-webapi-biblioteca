@@ -48,6 +48,10 @@ function cadastrar_livro() {
 
 function listar_livros() {
 
+    const listaLivros = document.getElementById("lista-livros");
+    while(listaLivros.firstChild){
+        listaLivros.removeChild(listaLivros.firstChild);
+    }
     fetch(api + '/livros')
         .then(response => response.json())
         .then((livros) => {
@@ -75,21 +79,6 @@ function listar_livros() {
                 listaLivros.appendChild(itemLista);
             }
         });
-}
-
-function info_livro(id) {
-    fetch(api + '/livros/' + id)
-        .then(response => response.json())
-        .then((livros) => {
-            document.getElementById('mostrar-titulo').innerHTML = livros.Titulo
-            document.getElementById('mostrar-autor').innerHTML = livros.Autor
-            document.getElementById('mostrar-lancamento').innerHTML = livros.Lancamento
-            document.getElementById('mostrar-quantidade').innerHTML = livros.Estoque;
-
-            idLivro = livros.Id;
-
-        })
-
 }
 
 function visualizar_livro(id) {

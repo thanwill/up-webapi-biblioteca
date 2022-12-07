@@ -37,20 +37,12 @@ public class Emprestimo
     public int Cadastrar(BibliotecaContext banco, EmprestimoCadastrar cadastrar)
     {
         Emprestimo emprestimo = new Emprestimo();
+        Usuario usuario = banco.Usuarios.Find(cadastrar.UsuarioId);        
+        Livro livro = banco.Livros.Find(cadastrar.LivroId);
+        emprestimo.Usuario = usuario;
+        emprestimo.Livro = livro;
         emprestimo.Inicio = DateTime.Now;
-        emprestimo.Devolucao = emprestimo.Inicio
-            .AddDays(
-                cadastrar.Periodo
-            );
-        emprestimo.Usuario = banco.Usuarios
-            .Find(
-                cadastrar.UsuarioId
-            );
-        emprestimo.Livro = banco.Livros
-            .Find(
-                cadastrar.LivroId
-            );
-
+        emprestimo.Devolucao = emprestimo.Inicio.AddDays(cadastrar.Periodo);
         banco.Emprestimos.Add(emprestimo);
         return banco.SaveChanges();
     }
@@ -58,6 +50,7 @@ public class Emprestimo
     public int Atualizar(BibliotecaContext banco, EmprestimoAtualizar atualizar)
     {
         Emprestimo emprestimo = banco.Emprestimos.Find(atualizar.EmprestimoId);
+
         if (emprestimo != null)
         {
             emprestimo.Devolucao = emprestimo.Devolucao.AddDays(atualizar.Dias);

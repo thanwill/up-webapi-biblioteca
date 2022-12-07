@@ -8,8 +8,8 @@ public class Emprestimo
     public DateTime Inicio { get; set; }
     public DateTime Devolucao { get; set; }
     public bool Status { get; set; } = true;
-    public int Atrasos { get; set; }
-    public double Custo { get; set; }
+    public int Atrasos { get; set; } = 0;
+    public double Custo { get; set; } = 0.0;
     public Livro Livro { get; set; }
     public Usuario Usuario { get; set; }
 
@@ -19,6 +19,7 @@ public class Emprestimo
             banco.Emprestimos.ToList(), Formatting.Indented
         );
     }
+
     public string Buscar(BibliotecaContext banco, int id)
     {
         var emprestimo = banco.Emprestimos.Find(id);

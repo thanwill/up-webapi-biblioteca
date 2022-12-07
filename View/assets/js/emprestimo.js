@@ -12,6 +12,8 @@ function cadastrarEmprestimo() {
     )
   };
 
+  console.log(body)
+
   fetch(api + "/emprestimos", {
       method: "POST",
       redirect: "follow",
@@ -159,7 +161,6 @@ function visualizar_emprestimo(id) {
         </div>
         <div class="modal-footer">
           <a href="#formulario-usuario" class="modal-close waves-effect waves-green btn-flat">Editar</a>
-          <a class="modal-close waves-effect waves-green btn-flat" onclick="foo({})">Excluir</a>
         </div>
           
           `;
